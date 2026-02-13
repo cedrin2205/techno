@@ -1,0 +1,752 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hope & Opportunity - Support Resources</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: #f5f5f5;
+        }
+
+        /* Header and Navigation */
+        header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 1rem 2rem;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .nav-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .hamburger {
+            cursor: pointer;
+            background: none;
+            border: none;
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+            padding: 10px;
+            z-index: 1001;
+            position: relative;
+        }
+
+        .hamburger span {
+            width: 30px;
+            height: 3px;
+            background: white;
+            border-radius: 3px;
+            transition: all 0.3s ease;
+        }
+
+        .hamburger.active span:nth-child(1) {
+            transform: rotate(45deg) translate(8px, 8px);
+        }
+
+        .hamburger.active span:nth-child(2) {
+            opacity: 0;
+        }
+
+        .hamburger.active span:nth-child(3) {
+            transform: rotate(-45deg) translate(7px, -7px);
+        }
+
+        .nav-menu {
+            position: fixed;
+            top: 0;
+            right: -100%;
+            height: 100vh;
+            width: 300px;
+            background: white;
+            box-shadow: -2px 0 10px rgba(0,0,0,0.1);
+            transition: right 0.3s ease;
+            padding-top: 80px;
+            z-index: 1000;
+        }
+
+        .nav-menu.active {
+            right: 0;
+        }
+
+        .nav-menu ul {
+            list-style: none;
+        }
+
+        .nav-menu ul li {
+            padding: 0;
+        }
+
+        .nav-menu ul li a {
+            display: block;
+            padding: 1.5rem 2rem;
+            color: #333;
+            text-decoration: none;
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
+            border-left: 4px solid transparent;
+        }
+
+        .nav-menu ul li a:hover {
+            background: #f0f0f0;
+            border-left-color: #667eea;
+            color: #667eea;
+        }
+
+        /* Main Content */
+        main {
+            margin-top: 80px;
+            padding: 2rem;
+            max-width: 1200px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .page {
+            display: none;
+        }
+
+        .page.active {
+            display: block;
+            animation: fadeIn 0.5s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Home Page */
+        .hero {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 4rem 2rem;
+            border-radius: 15px;
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .hero h1 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            opacity: 0.9;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .quick-links {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .quick-link-card {
+            background: white;
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-align: center;
+        }
+
+        .quick-link-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 15px rgba(0,0,0,0.2);
+        }
+
+        .quick-link-card h3 {
+            color: #667eea;
+            margin-bottom: 1rem;
+            font-size: 1.5rem;
+        }
+
+        .quick-link-card p {
+            color: #666;
+        }
+
+        /* Blog Posts */
+        .blog-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .blog-card {
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+        }
+
+        .blog-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 15px rgba(0,0,0,0.2);
+        }
+
+        .blog-image {
+            width: 100%;
+            height: 200px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 3rem;
+        }
+
+        .blog-content {
+            padding: 1.5rem;
+        }
+
+        .blog-category {
+            display: inline-block;
+            background: #e0e7ff;
+            color: #667eea;
+            padding: 0.25rem 0.75rem;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            margin-bottom: 0.75rem;
+        }
+
+        .blog-card h3 {
+            color: #333;
+            margin-bottom: 0.75rem;
+            font-size: 1.3rem;
+        }
+
+        .blog-card p {
+            color: #666;
+            margin-bottom: 1rem;
+            line-height: 1.6;
+        }
+
+        .read-more {
+            color: #667eea;
+            text-decoration: none;
+            font-weight: 600;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .read-more:hover {
+            gap: 0.75rem;
+        }
+
+        /* Job Listings */
+        .job-filters {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 10px;
+            margin-bottom: 2rem;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .filter-group {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .filter-group select {
+            padding: 0.75rem;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: border-color 0.3s ease;
+        }
+
+        .filter-group select:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+
+        .job-list {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+
+        .job-card {
+            background: white;
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+        }
+
+        .job-card:hover {
+            transform: translateX(5px);
+            box-shadow: 0 6px 12px rgba(0,0,0,0.15);
+        }
+
+        .job-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: start;
+            margin-bottom: 1rem;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .job-title {
+            font-size: 1.4rem;
+            color: #333;
+            margin-bottom: 0.5rem;
+        }
+
+        .company {
+            color: #667eea;
+            font-weight: 600;
+            font-size: 1.1rem;
+        }
+
+        .job-badge {
+            background: #10b981;
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            font-weight: 600;
+        }
+
+        .job-details {
+            display: flex;
+            gap: 2rem;
+            margin: 1rem 0;
+            flex-wrap: wrap;
+            color: #666;
+        }
+
+        .job-detail {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .job-description {
+            color: #555;
+            line-height: 1.6;
+            margin-bottom: 1rem;
+        }
+
+        .apply-btn {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 0.75rem 2rem;
+            border: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 600;
+        }
+
+        .apply-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
+        }
+
+        /* Page Title */
+        .page-title {
+            font-size: 2.5rem;
+            color: #333;
+            margin-bottom: 1rem;
+        }
+
+        .page-subtitle {
+            color: #666;
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2rem;
+            }
+
+            .hero p {
+                font-size: 1rem;
+            }
+
+            .quick-links {
+                grid-template-columns: 1fr;
+            }
+
+            .blog-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .job-header {
+                flex-direction: column;
+            }
+
+            main {
+                padding: 1rem;
+            }
+        }
+
+        /* Overlay for menu */
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.5);
+            display: none;
+            z-index: 999;
+        }
+
+        .overlay.active {
+            display: block;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header with Hamburger Menu -->
+    <header>
+        <div class="nav-container">
+            <div class="logo">
+                <span>💙</span>
+                <span>Hope & Opportunity</span>
+            </div>
+            <button class="hamburger" id="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </div>
+    </header>
+
+    <!-- Navigation Menu -->
+    <nav class="nav-menu" id="navMenu">
+        <ul>
+            <li><a href="#" data-page="home">🏠 Home</a></li>
+            <li><a href="#" data-page="blog">📝 Mental Health Blog</a></li>
+            <li><a href="#" data-page="jobs">💼 Part-Time Jobs</a></li>
+        </ul>
+    </nav>
+
+    <!-- Overlay -->
+    <div class="overlay" id="overlay"></div>
+
+    <!-- Main Content -->
+    <main>
+        <!-- Home Page -->
+        <div class="page active" id="home">
+            <div class="hero">
+                <h1>Welcome to Hope & Opportunity</h1>
+                <p>Your journey matters. Find mental health support and job opportunities to help you move forward.</p>
+            </div>
+
+            <div class="quick-links">
+                <div class="quick-link-card" onclick="navigateTo('blog')">
+                    <h3>📝 Mental Health Blog</h3>
+                    <p>Read inspiring stories, coping strategies, and wellness tips written with care and understanding.</p>
+                </div>
+                <div class="quick-link-card" onclick="navigateTo('jobs')">
+                    <h3>💼 Part-Time Jobs</h3>
+                    <p>Browse flexible job opportunities that fit your schedule and help you build a better future.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Blog Page -->
+        <div class="page" id="blog">
+            <h1 class="page-title">Mental Health Blog</h1>
+            <p class="page-subtitle">Resources and stories to support your mental wellbeing</p>
+
+            <div class="blog-grid">
+                <div class="blog-card">
+                    <div class="blog-image">🌅</div>
+                    <div class="blog-content">
+                        <span class="blog-category">Self-Care</span>
+                        <h3>Finding Peace in Small Moments</h3>
+                        <p>Discover how mindfulness and gratitude can transform even the most challenging days. Learn simple practices that cost nothing but can mean everything.</p>
+                        <a href="#" class="read-more">Read More →</a>
+                    </div>
+                </div>
+
+                <div class="blog-card">
+                    <div class="blog-image">💪</div>
+                    <div class="blog-content">
+                        <span class="blog-category">Resilience</span>
+                        <h3>You Are Stronger Than You Think</h3>
+                        <p>Real stories from people who've faced financial hardship and found their inner strength. You're not alone in this journey.</p>
+                        <a href="#" class="read-more">Read More →</a>
+                    </div>
+                </div>
+
+                <div class="blog-card">
+                    <div class="blog-image">🧘</div>
+                    <div class="blog-content">
+                        <span class="blog-category">Stress Relief</span>
+                        <h3>Free Ways to Manage Anxiety</h3>
+                        <p>Practical breathing exercises, meditation techniques, and grounding methods that require no money or special equipment.</p>
+                        <a href="#" class="read-more">Read More →</a>
+                    </div>
+                </div>
+
+                <div class="blog-card">
+                    <div class="blog-image">🤝</div>
+                    <div class="blog-content">
+                        <span class="blog-category">Community</span>
+                        <h3>Building Connections on a Budget</h3>
+                        <p>How to find community support, make meaningful friendships, and combat loneliness without spending money.</p>
+                        <a href="#" class="read-more">Read More →</a>
+                    </div>
+                </div>
+
+                <div class="blog-card">
+                    <div class="blog-image">🌱</div>
+                    <div class="blog-content">
+                        <span class="blog-category">Growth</span>
+                        <h3>Setting Goals When Everything Feels Hard</h3>
+                        <p>Learn to set realistic, achievable goals that honor where you are right now while moving you forward.</p>
+                        <a href="#" class="read-more">Read More →</a>
+                    </div>
+                </div>
+
+                <div class="blog-card">
+                    <div class="blog-image">💙</div>
+                    <div class="blog-content">
+                        <span class="blog-category">Hope</span>
+                        <h3>Tomorrow Can Be Different</h3>
+                        <p>Understanding that your current situation doesn't define your future. Stories of transformation and hope.</p>
+                        <a href="#" class="read-more">Read More →</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Jobs Page -->
+        <div class="page" id="jobs">
+            <h1 class="page-title">Part-Time Job Opportunities</h1>
+            <p class="page-subtitle">Flexible positions to help you get back on your feet</p>
+
+            <div class="job-filters">
+                <div class="filter-group">
+                    <select>
+                        <option>All Categories</option>
+                        <option>Customer Service</option>
+                        <option>Retail</option>
+                        <option>Food Service</option>
+                        <option>Warehouse</option>
+                        <option>Remote</option>
+                    </select>
+                    <select>
+                        <option>All Schedules</option>
+                        <option>Morning</option>
+                        <option>Afternoon</option>
+                        <option>Evening</option>
+                        <option>Weekend</option>
+                        <option>Flexible</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="job-list">
+                <div class="job-card">
+                    <div class="job-header">
+                        <div>
+                            <h3 class="job-title">Part-Time Customer Service Representative</h3>
+                            <div class="company">TechSupport Plus</div>
+                        </div>
+                        <div class="job-badge">Remote</div>
+                    </div>
+                    <div class="job-details">
+                        <div class="job-detail">⏰ 20 hours/week</div>
+                        <div class="job-detail">💵 $15-18/hour</div>
+                        <div class="job-detail">📍 Work from home</div>
+                    </div>
+                    <p class="job-description">
+                        Help customers via phone and chat. Flexible scheduling available. Training provided. No experience necessary - we value kindness and willingness to learn.
+                    </p>
+                    <button class="apply-btn">Apply Now</button>
+                </div>
+
+                <div class="job-card">
+                    <div class="job-header">
+                        <div>
+                            <h3 class="job-title">Grocery Store Stock Associate</h3>
+                            <div class="company">FreshMart</div>
+                        </div>
+                        <div class="job-badge" style="background: #f59e0b;">Part-Time</div>
+                    </div>
+                    <div class="job-details">
+                        <div class="job-detail">⏰ 15-25 hours/week</div>
+                        <div class="job-detail">💵 $14/hour</div>
+                        <div class="job-detail">📍 Multiple locations</div>
+                    </div>
+                    <p class="job-description">
+                        Stock shelves, organize inventory, and assist customers. Morning, afternoon, or evening shifts available. Employee discount on groceries.
+                    </p>
+                    <button class="apply-btn">Apply Now</button>
+                </div>
+
+                <div class="job-card">
+                    <div class="job-header">
+                        <div>
+                            <h3 class="job-title">Weekend Retail Sales Associate</h3>
+                            <div class="company">StyleHub Clothing</div>
+                        </div>
+                        <div class="job-badge" style="background: #8b5cf6;">Weekend</div>
+                    </div>
+                    <div class="job-details">
+                        <div class="job-detail">⏰ Saturdays & Sundays</div>
+                        <div class="job-detail">💵 $15/hour + commission</div>
+                        <div class="job-detail">📍 Downtown</div>
+                    </div>
+                    <p class="job-description">
+                        Help customers find the perfect outfits. Great for those needing weekday flexibility. Fun team environment and employee clothing discounts.
+                    </p>
+                    <button class="apply-btn">Apply Now</button>
+                </div>
+
+                <div class="job-card">
+                    <div class="job-header">
+                        <div>
+                            <h3 class="job-title">Data Entry Clerk</h3>
+                            <div class="company">AdminPro Services</div>
+                        </div>
+                        <div class="job-badge">Remote</div>
+                    </div>
+                    <div class="job-details">
+                        <div class="job-detail">⏰ Flexible hours</div>
+                        <div class="job-detail">💵 $16/hour</div>
+                        <div class="job-detail">📍 Work from home</div>
+                    </div>
+                    <p class="job-description">
+                        Enter and maintain data in computer systems. Set your own hours within deadlines. Basic computer skills required. Reliable internet connection needed.
+                    </p>
+                    <button class="apply-btn">Apply Now</button>
+                </div>
+
+                <div class="job-card">
+                    <div class="job-header">
+                        <div>
+                            <h3 class="job-title">Warehouse Package Handler</h3>
+                            <div class="company">QuickShip Logistics</div>
+                        </div>
+                        <div class="job-badge" style="background: #f59e0b;">Part-Time</div>
+                    </div>
+                    <div class="job-details">
+                        <div class="job-detail">⏰ 4-hour shifts</div>
+                        <div class="job-detail">💵 $17/hour</div>
+                        <div class="job-detail">📍 Near transit hub</div>
+                    </div>
+                    <p class="job-description">
+                        Sort and load packages in our warehouse. Morning or evening shifts available. Stay active while earning. No experience needed - full training provided.
+                    </p>
+                    <button class="apply-btn">Apply Now</button>
+                </div>
+
+                <div class="job-card">
+                    <div class="job-header">
+                        <div>
+                            <h3 class="job-title">Food Delivery Driver</h3>
+                            <div class="company">Multiple Platforms</div>
+                        </div>
+                        <div class="job-badge" style="background: #10b981;">Flexible</div>
+                    </div>
+                    <div class="job-details">
+                        <div class="job-detail">⏰ Work when you want</div>
+                        <div class="job-detail">💵 $15-25/hour with tips</div>
+                        <div class="job-detail">📍 Choose your area</div>
+                    </div>
+                    <p class="job-description">
+                        Deliver food on your own schedule with apps like DoorDash, Uber Eats, or Grubhub. Use your car, bike, or scooter. Be your own boss.
+                    </p>
+                    <button class="apply-btn">Apply Now</button>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        // Navigation functionality
+        const hamburger = document.getElementById('hamburger');
+        const navMenu = document.getElementById('navMenu');
+        const overlay = document.getElementById('overlay');
+        const navLinks = document.querySelectorAll('.nav-menu a');
+        const pages = document.querySelectorAll('.page');
+
+        function toggleMenu() {
+            hamburger.classList.toggle('active');
+            navMenu.classList.toggle('active');
+            overlay.classList.toggle('active');
+        }
+
+        function closeMenu() {
+            hamburger.classList.remove('active');
+            navMenu.classList.remove('active');
+            overlay.classList.remove('active');
+        }
+
+        function navigateTo(pageId) {
+            // Hide all pages
+            pages.forEach(page => page.classList.remove('active'));
+            
+            // Show selected page
+            document.getElementById(pageId).classList.add('active');
+            
+            // Close menu
+            closeMenu();
+            
+            // Scroll to top
+            window.scrollTo(0, 0);
+        }
+
+        hamburger.addEventListener('click', toggleMenu);
+        overlay.addEventListener('click', closeMenu);
+
+        navLinks.forEach(link => {
+            link.addEventListener('click', (e) => {
+                e.preventDefault();
+                const pageId = link.getAttribute('data-page');
+                navigateTo(pageId);
+            });
+        });
+
+        // Make navigateTo available globally for quick links
+        window.navigateTo = navigateTo;
+    </script>
+</body>
+</html>
